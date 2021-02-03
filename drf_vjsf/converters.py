@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.relations import ManyRelatedField
 
 from drf_jsonschema.drf_jsonschema.convert import converter
-from drf_jsonschema.drf_jsonschema.converters import Error
+from drf_jsonschema.drf_jsonschema.converters import Error, Converter
 
 
 @converter
