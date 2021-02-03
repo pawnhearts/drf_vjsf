@@ -14,7 +14,7 @@
     <v-app>
       <v-main>
           <v-container>
-            <p>valid={{valid}}</p>
+            <p>valid=<span v-text="valid"></span></p>
             <v-form ref="form" v-model="valid">
               <v-jsf v-model="model" :schema="schema" :options="options" />
             </v-form>
@@ -31,6 +31,7 @@
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@koumoul/vjsf@latest/dist/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@koumoul/vjsf@latest/dist/third-party.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js" integrity="sha512-otOZr2EcknK9a5aa3BbMR9XOjYKtxxscwyRHN6zmdXuRfJ5uApkHB7cz1laWk2g8RKLzV9qv/fl3RPwfCuoxHQ==" crossorigin="anonymous"></script>
   <script>
       Vue.component('VJsf', VJsf.default)
 
@@ -46,10 +47,10 @@
         mounted: function() {this.fetchSchema();},
         methods: {
       fetchSchema() {
-        fetch("../schema/").then((response) => {
+        fetch("../", {method: "OPTIONS"}).then((response) => {
             return response.json();
     }).then((result) => {
-        this.schema =  result;
+        this.schema =  result.schema;
     });
       }
         }

@@ -18,8 +18,8 @@ class BookViewSet(viewsets.ModelViewSet):
     pagination_class = pagination.PageNumberPagination
 
     @action(detail=False, methods=['GET'])
-    def schema(self, request):
-        return Response(to_jsonschema(self.get_serializer()))
+    def html(self, request):
+        return render(request, 'vue_form.html', {})
 
 
 
@@ -30,13 +30,8 @@ class AuthorViewSet(viewsets.ModelViewSet):
     pagination_class = pagination.LimitOffsetPagination
 
     @action(detail=False, methods=['GET'])
-    def schema(self, request):
-        return Response(to_jsonschema(self.get_serializer()))
-
-
-    @action(detail=False, methods=['GET'])
     def html(self, request):
-        return render(request, 'authors.html', {})
+        return render(request, 'vue_form.html', {})
 
 
 class PublisherViewSet(viewsets.ModelViewSet):

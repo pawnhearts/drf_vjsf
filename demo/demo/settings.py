@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "django_filters",
     "app",
+
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,7 @@ REST_FRAMEWORK = {
 }
 if os.path.exists("frontend"):
     INSTALLED_APPS += ["frontend"]
+
+REST_FRAMEWORK = {
+    'DEFAULT_METADATA_CLASS': 'drf_vjsf.JsonSchemaMetadata'
+}
