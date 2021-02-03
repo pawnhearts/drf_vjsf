@@ -7,7 +7,7 @@ class JsonSchemaMetadata(SimpleMetadata):
     def determine_metadata(self, request, view):
 
         metadata = super().determine_metadata(request, view)
-        if serializer := getattr(view, 'get_serializer', getattr(view, 'serializer_class', None)):
+        if serializer := getattr(view, 'get_serializer', getattr(view, 'serializer_class', None))():
             metadata['schema'] = to_jsonschema(serializer)
             metadata['url'] = view.request.path
             metadata['detail'] = view.detail
