@@ -20,7 +20,7 @@
             </v-form>
             <v-layout row class="mt-2">
               <v-spacer></v-spacer>
-              <v-btn color="primary" @click="$refs.form.validate()">Validate</v-btn>
+              <v-btn color="primary" @click="$refs.form.validate() && save()">Validate</v-btn>
             </v-layout>
           </v-container>
       </v-main>
@@ -32,6 +32,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@koumoul/vjsf@latest/dist/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@koumoul/vjsf@latest/dist/third-party.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js" integrity="sha512-otOZr2EcknK9a5aa3BbMR9XOjYKtxxscwyRHN6zmdXuRfJ5uApkHB7cz1laWk2g8RKLzV9qv/fl3RPwfCuoxHQ==" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
   <script>
       Vue.component('VJsf', VJsf.default)
 
@@ -40,33 +41,55 @@
       vuetify: new Vuetify(),
       data: {
     model: {},
-    options: {context:{id:1}},
+    options: {
+      context:{
+      }
+      },
     schema: {},
+        actions: {},
+        url: {},
     valid: null},
 
         mounted: function() {
         this.fetchSchema();
-          this.fetchModel();
         },
         methods: {
+        save() {
+          fetch(this.url, {method: this.actions.POST?'POST':'PUT', body: JSON.stringify(this.model),
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': Cookies.get('csrftoken')
+    }
+          }).then((response) => {
+               return response.json();
+             }).then((result) => {
+               this.model = result;
+            alert(JSON.stringify(result))
+             });
+
+        },
       fetchSchema() {
         fetch("../", {method: "OPTIONS"}).then((response) => {
             return response.json();
     }).then((result) => {
         this.schema =  result.schema;
-    });
-      },
+        this.url = result.url;
+        this.actions = result.actions;
+       if(result.detail) {
 
-          fetchModel() {
-            if(this.options.context && this.options.context.id) {
-              fetch('../'+this.options.context.id, {method: "GET"}).then((response) => {
-                return response.json();
-              }).then((result) => {
-                this.model = result;
-              });
-            }
-          }
-        }
+             fetch(result.url, {method: "GET"}).then((response) => {
+               return response.json();
+             }).then((result) => {
+               this.model = result;
+             });
+         }
+       });
+      }
+
+    }
     })
   </script>
 </body>

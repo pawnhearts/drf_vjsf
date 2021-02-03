@@ -18,6 +18,9 @@ class BookViewSet(viewsets.ModelViewSet):
     def html(self, request):
         return render(request, 'vue_form.html', {})
 
+    @action(detail=True, methods=['GET'], url_path='html')
+    def html_detail(self, request, pk):
+        return render(request, 'vue_form.html', {'pk': pk})
 
 
 class AuthorViewSet(viewsets.ModelViewSet):
@@ -29,6 +32,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['GET'])
     def html(self, request):
         return render(request, 'vue_form.html', {})
+
 
 
 class PublisherViewSet(viewsets.ModelViewSet):
