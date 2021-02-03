@@ -126,5 +126,5 @@ if os.path.exists("frontend"):
     INSTALLED_APPS += ["frontend"]
 
 REST_FRAMEWORK = {
-    'DEFAULT_METADATA_CLASS': 'drf_vjsf.JsonSchemaMetadata'
+    'DEFAULT_METADATA_CLASS': 'drf_vjsf.JsonSchemaMetadata',
 }

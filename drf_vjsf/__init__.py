@@ -1,8 +1,6 @@
 from drf_jsonschema import to_jsonschema
 from rest_framework.metadata import SimpleMetadata
 
-# from drf_auto_endpoint.adapters import ReactJsonSchemaAdapter
-
 
 class JsonSchemaMetadata(SimpleMetadata):
 
