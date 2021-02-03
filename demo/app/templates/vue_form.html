@@ -40,11 +40,14 @@
       vuetify: new Vuetify(),
       data: {
     model: {},
-    options: {},
+    options: {context:{id:1}},
     schema: {},
     valid: null},
 
-        mounted: function() {this.fetchSchema();},
+        mounted: function() {
+        this.fetchSchema();
+          this.fetchModel();
+        },
         methods: {
       fetchSchema() {
         fetch("../", {method: "OPTIONS"}).then((response) => {
@@ -52,7 +55,17 @@
     }).then((result) => {
         this.schema =  result.schema;
     });
-      }
+      },
+
+          fetchModel() {
+            if(this.options.context && this.options.context.id) {
+              fetch('../'+this.options.context.id, {method: "GET"}).then((response) => {
+                return response.json();
+              }).then((result) => {
+                this.model = result;
+              });
+            }
+          }
         }
     })
   </script>

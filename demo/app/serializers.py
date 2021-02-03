@@ -24,7 +24,7 @@ BookSerializer = get_serializer_class(
     Book,
     # ["authors"],
     # authors=get_serializer_class(Author, ["name"])(many=True),
-    # tags=TagSerializer(many=True),
+    tags=TagSerializer(many=True),
     publisher=serializers.PrimaryKeyRelatedField(queryset=Publisher.objects.all()),
     depth=2,
 )

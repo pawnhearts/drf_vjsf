@@ -2,12 +2,9 @@ from django.shortcuts import render
 from rest_framework import viewsets, pagination
 from rest_framework.decorators import action
 
-from drf_jsonschema import to_jsonschema
-from rest_framework.response import Response
-
 from .models import *
 from .serializers import get_serializer_class, BookSerializer, AuthorSerializer
-from django_filters.rest_framework import DjangoFilterBackend, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class BookViewSet(viewsets.ModelViewSet):
