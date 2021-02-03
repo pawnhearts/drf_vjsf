@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@koumoul/vjsf@latest/dist/main.css">
+    <!-- load third-party dependencies (markdown-it, vuedraggable) -->
+    <!-- you can also load them separately based on your needs -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+  <div id="app">
+    <v-app>
+      <v-main>
+          <v-container>
+            <p>valid={{valid}}</p>
+            <v-form ref="form" v-model="valid">
+              <v-jsf v-model="model" :schema="schema" :options="options" />
+            </v-form>
+            <v-layout row class="mt-2">
+              <v-spacer></v-spacer>
+              <v-btn color="primary" @click="$refs.form.validate()">Validate</v-btn>
+            </v-layout>
+          </v-container>
+      </v-main>
+    </v-app>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@koumoul/vjsf@latest/dist/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@koumoul/vjsf@latest/dist/third-party.js"></script>
+  <script>
+      Vue.component('VJsf', VJsf.default)
+
+    new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+      data: {
+    model: {},
+    options: {},
+    schema: {},
+    valid: null},
+
+        mounted: function() {this.fetchSchema();},
+        methods: {
+      fetchSchema() {
+        fetch("../schema/").then((response) => {
+            return response.json();
+    }).then((result) => {
+        this.schema =  result;
+    });
+      }
+        }
+    })
+  </script>
+</body>
+</html>
